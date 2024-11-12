@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources><style name="Theme.Weather" parent="Theme.AppCompat.Light.NoActionBar">
+    <!-- Customize your theme here -->
+    <item name="colorPrimary">@color/white</item>
+    <item name="colorPrimaryDark">@color/black</item>
+    <item name="colorAccent">@color/light_blue</item>
+
+</style>
+</resources>
