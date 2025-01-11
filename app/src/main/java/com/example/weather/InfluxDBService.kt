@@ -2,7 +2,6 @@ package com.example.weather
 
 import SensorData
 import android.util.Log
-import android.widget.EditText
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.*
 import okhttp3.Call
@@ -14,18 +13,18 @@ import okhttp3.RequestBody
 import okhttp3.Response
 import org.json.JSONObject
 import java.io.IOException
+import java.time.ZonedDateTime
 import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.resume
 
-
-class InfluxDBService(private val consoleTextLine: EditText) : CoroutineScope {
+class InfluxDBService() : CoroutineScope {
 
     override val coroutineContext: CoroutineContext = Dispatchers.Main
 
-    val url = "https://smarthouse-server.local:8086/api/v2/query"
+    val url = "https://192.168.0.8:8086/api/v2/query"
     private val token = "YjZH9DXxoGa5GQMn0RCNE4y6eSo_KRXTwgmBe9L2NDHFSUJJx0Lbtk3hFjXjk7Q8-PmuZWqIfy2QD9bhR4TyWg=="
     private val org = "SmartHouse"
     private val bucket = "SmartHouse"
@@ -53,23 +52,33 @@ class InfluxDBService(private val consoleTextLine: EditText) : CoroutineScope {
         }
     }
 
-
-    fun queryData() {
-        launch(Dispatchers.IO) {
-            val query = """
-                from(bucket: "$bucket")
-                    |> range(start: -10m)
-                    |> filter(fn: (r) => r["_measurement"] == "measurement1")
-            """
-            sendQuery(query)
-        }
-    }
-
     suspend fun queryDataWithFilters(sensorNames: List<String>, measurementName: String): List<SensorData> {
         return withContext(Dispatchers.IO) {
             val query = """
                 from(bucket: "$bucket")
                     |> range(start: -10m)
+                    |> filter(fn: (r) => r["_measurement"] == "Sensors")
+                    |> filter(fn: (r) => r["MeasurementName"] == "PHT")
+                    |> filter(fn: (r) => ${sensorNames.joinToString(" or ") { """r["SensorName"] == "$it"""" } })
+                    |> filter(fn: (r) => r["_field"] == "$measurementName")
+                    |> aggregateWindow(every: 1m, fn: mean, createEmpty: false)
+                    |> yield(name: "mean")
+            """
+            sendQuery(query)
+        }
+    }
+
+    suspend fun queryDataWithinTimeRange(
+        sensorNames: List<String>, measurementName: String, startTime: String, endTime: String
+    ): List<SensorData> {
+        return withContext(Dispatchers.IO) {
+            var formattedStartTime = startTime.replace(" ", "T") + ":00Z"
+            var formattedEndTime = endTime.replace(" ", "T") + ":00Z"
+
+            // Create the Flux query with the valid time format
+            val query = """
+                from(bucket: "$bucket")
+                    |> range(start: $formattedStartTime, stop: $formattedEndTime)
                     |> filter(fn: (r) => r["_measurement"] == "Sensors")
                     |> filter(fn: (r) => r["MeasurementName"] == "PHT")
                     |> filter(fn: (r) => ${sensorNames.joinToString(" or ") { """r["SensorName"] == "$it"""" } })
@@ -116,14 +125,11 @@ class InfluxDBService(private val consoleTextLine: EditText) : CoroutineScope {
     }
 
     private fun parseResponse(responseBody: String?): List<SensorData> {
-        // Check if the responseBody is null or empty
         if (responseBody.isNullOrEmpty()) {
             return emptyList()
         }
 
-        // Split the response into rows by line breaks
         val rows = responseBody.split("\n")
-
         val sensorDataList = mutableListOf<SensorData>()
 
         for (row in rows.drop(1)) {

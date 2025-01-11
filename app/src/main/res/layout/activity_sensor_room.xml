@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#232424"
+    android:padding="16dp">
+
+    <!-- Заголовок с названием комнаты -->
+    <TextView
+        android:id="@+id/room_name_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#007DBF"
+        android:fontFamily="sans-serif-black"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="Room Name"
+        android:textColor="#FFFFFF"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Температура -->
+    <TextView
+        android:id="@+id/temperature_value_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#232424"
+        android:fontFamily="sans-serif"
+        android:letterSpacing="0.05"
+        android:padding="16dp"
+        android:shadowColor="#000000"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="1"
+        android:text="Temperature: -- °C"
+        android:textColor="#007DBF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/room_name_text" />
+
+    <!-- Влажность -->
+    <TextView
+        android:id="@+id/humidity_value_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#232424"
+        android:fontFamily="sans-serif"
+        android:letterSpacing="0.05"
+        android:padding="16dp"
+        android:shadowColor="#000000"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="1"
+        android:text="Humidity: -- %"
+        android:textColor="#007DBF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/temperature_value_text" />
+
+    <!-- Давление -->
+    <TextView
+        android:id="@+id/pressure_value_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#232424"
+        android:fontFamily="sans-serif"
+        android:letterSpacing="0.05"
+        android:padding="16dp"
+        android:shadowColor="#000000"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="1"
+        android:text="Pressure: -- hPa"
+        android:textColor="#007DBF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/humidity_value_text" />
+
+    <!-- Фильтры даты и времени -->
+    <LinearLayout
+        android:id="@+id/date_time_filter"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pressure_value_text"> <!-- Начальная дата/время -->
+        <EditText
+            android:id="@+id/start_date_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#313030"
+            android:hint="Start Date/Time"
+            android:inputType="datetime"
+            android:padding="16dp"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#A9A9A9"
+            android:focusableInTouchMode="false" /> <!-- Конечная дата/время -->
+        <EditText
+            android:id="@+id/end_date_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#313030"
+            android:hint="End Date/Time"
+            android:inputType="datetime"
+            android:padding="16dp"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#A9A9A9"
+            android:focusableInTouchMode="false" />
+    </LinearLayout>
+
+    <!-- Кнопка для применения фильтров -->
+    <Button
+        android:id="@+id/apply_filter_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="#007DBF"
+        android:text="Apply Filters"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/date_time_filter" />
+
+    <!-- Переключатель для выбора графика -->
+    <RadioGroup
+        android:id="@+id/graph_type_radio_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/apply_filter_button">
+
+        <RadioButton
+            android:id="@+id/radio_temperature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Temperature"
+            android:textColor="#007DBF"
+            android:textSize="14sp" />
+
+        <RadioButton
+            android:id="@+id/radio_humidity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Humidity"
+            android:textColor="#007DBF" />
+
+        <RadioButton
+            android:id="@+id/radio_pressure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pressure"
+            android:textColor="#007DBF" />
+    </RadioGroup>
+
+
+    <!-- График -->
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/sensor_data_chart"
+        android:layout_width="0dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="20dp"
+        android:background="#313030"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/graph_type_radio_group" />
+</androidx.constraintlayout.widget.ConstraintLayout>

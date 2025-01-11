@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">weather</string>
-    <string name="dining_room_temperature">Dining Room Temperature</string>
-    <string name="external_temperature">External Temperature</string>
-    <string name="bedroom_temperature">Bedroom Temperature</string>
+    <string name="dining_room_temperature">Dining Room</string>
+    <string name="external_temperature">External</string>
+    <string name="bedroom_temperature">Bedroom</string>
     <string name="all_temperature">All Temperature Info</string>
     <string name="smart_house_address_http_example_com">Smart house: weather</string>
     <string name="title_activity_bedroom">BedroomActivity</string>
@@ -14,4 +14,12 @@
     <string name="external_room">External</string>
     <string name="temperature_c">Temperature: %1$s °C</string>
     <string name="humidity_c">Humidity: %1$s %</string>
+    <string name="formatted_metrics">
+        <font color="#007DBF">Temperature:</font> <b>%1$s°C</b>\n
+        <font color="#007DBF">Humidity:</font> <b>%2$s%%</b>\n
+        <font color="#007DBF">Pressure:</font> <b>%3$s hPa</b>\n
+    </string>
+
+
+
 </resources>

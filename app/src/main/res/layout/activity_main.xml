@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D3E6E6"
+    android:background="#232424"
     android:padding="16dp"
     tools:context=".MainActivity">
 
+    <!-- Прогресс-бар -->
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
@@ -18,30 +19,60 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <!-- Заголовок SMART HOUSE -->
+    <LinearLayout
         android:id="@+id/urlAddress"
-        android:layout_width="379dp"
-        android:layout_height="88dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:background="@drawable/cloud_background"
         android:gravity="center"
-        android:padding="16dp"
-        android:text="@string/smart_house_address_http_example_com"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@id/btnBedroomTemperature"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/smart_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#007DBF"
+            android:fontFamily="sans-serif-black"
+            android:padding="8dp"
+            android:text="SMART"
+            android:textColor="#FFFFFF"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/house_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="sans-serif"
+            android:letterSpacing="0.05"
+            android:padding="8dp"
+            android:shadowColor="#000000"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="1"
+            android:text="HOUSE"
+            android:textColor="#007DBF"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Кнопки -->
     <Button
         android:id="@+id/btnBedroomTemperature"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:background="@drawable/rounded_button"
+        android:backgroundTint="#007DBF"
+        android:foreground="?attr/selectableItemBackground"
         android:text="@string/bedroom_temperature"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/urlAddress" />
@@ -51,8 +82,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:background="@drawable/rounded_button"
+        android:backgroundTint="#007DBF"
+        android:foreground="?attr/selectableItemBackground"
         android:text="@string/dining_room_temperature"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnBedroomTemperature" />
@@ -62,35 +97,87 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:background="@drawable/rounded_button"
+        android:backgroundTint="#007DBF"
+        android:foreground="?attr/selectableItemBackground"
         android:text="@string/external_temperature"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnDiningRoomTemperature" />
 
-    <Button
-        android:id="@+id/btnAllTemperature"
+    <LinearLayout
+        android:id="@+id/roomMetrics"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/rounded_button"
-        android:text="@string/all_temperature"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnExternalTemperature" />
-
-    <EditText
-        android:id="@+id/consoleTextLine"
-        android:layout_width="335dp"
-        android:layout_height="375dp"
-        android:ems="10"
-        android:gravity="start|top"
-        android:inputType="textMultiLine"
+        android:orientation="vertical"
+        android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnAllTemperature" />
+        app:layout_constraintTop_toBottomOf="@+id/btnExternalTemperature">
+
+        <!-- Карточка Living Room -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/room_card_background"
+            android:elevation="4dp">
+
+            <TextView
+                android:id="@+id/livingRoomMetrics"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Living Room: -"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Карточка Dining Room -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/room_card_background"
+            android:elevation="4dp">
+
+            <TextView
+                android:id="@+id/diningRoomMetrics"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dining Room: -"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Карточка External -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/room_card_background"
+            android:elevation="4dp">
+
+            <TextView
+                android:id="@+id/externalRoomMetrics"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="External: -"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
